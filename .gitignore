@@ -1,0 +1,19 @@
+# Pasta com os arquivos compilados (.class)
+build/
+
+# Pasta com o .jar final e bibliotecas copiadas
+dist/
+
+# Arquivos de cache e de configuração do usuário do NetBeans
+# É importante ignorar isso para que outros desenvolvedores
+# possam abrir o projeto sem conflitos.
+nbproject/private/
+nb-configuration.xml
+nbactions.xml
+
+# Arquivos de log que podem ser gerados
+*.log
+
+# Arquivos de sistema operacional (sempre bom ter)
+.DS_Store
+Thumbs.db
