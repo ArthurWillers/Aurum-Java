@@ -20,18 +20,8 @@ public class Aurum {
      */
     public static void main(String[] args) {
         try {
-            try {
-                // Tenta definir o Look and Feel FlatLaf Light
-                //UIManager.setLookAndFeel(new FlatLightLaf());
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (ClassNotFoundException ex) {
-                System.getLogger(Aurum.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (InstantiationException ex) {
-                System.getLogger(Aurum.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (IllegalAccessException ex) {
-                System.getLogger(Aurum.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
-
+            // Tenta definir o Look and Feel FlatLaf Light
+            UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
             // Se falhar, usa o tema padrão do sistema como fallback
             System.err.println("Falha ao carregar o Look and Feel FlatLaf. Usando o tema padrão do sistema.");
@@ -47,5 +37,5 @@ public class Aurum {
             new Dashboard().setVisible(true);
         });
     }
-
+    
 }
