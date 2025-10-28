@@ -5,7 +5,6 @@
 package aurum.java;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.mycompany.aurum.Dashboard;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -37,5 +36,5 @@ public class Aurum {
             new Dashboard().setVisible(true);
         });
     }
-    
+
 }
