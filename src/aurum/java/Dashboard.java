@@ -4,6 +4,15 @@
  */
 package aurum.java;
 
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+
 /**
  *
  * @author Ethan
@@ -12,11 +21,31 @@ public class Dashboard extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
 
+    private YearMonth mesSelecionado; // Variável para guardar o mês/ano
+
     /**
      * Creates new form Dashboard
      */
     public Dashboard() {
         initComponents();
+        // Define o mês atual como padrão ao iniciar
+        this.mesSelecionado = YearMonth.now();
+
+        atualizarDashboard();
+    }
+
+    private void atualizarDashboard() {
+        // Atualiza o JLabel com o mês selecionado
+        Locale localeBrasil = new Locale("pt", "BR");
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("MMMM 'de' yyyy", localeBrasil);
+
+        // Formata o texto e deixa a primeira letra maiúscula
+        String mesFormatado = mesSelecionado.format(formatador);
+        mesFormatado = mesFormatado.substring(0, 1).toUpperCase() + mesFormatado.substring(1);
+
+        jLabelMesSelecionado.setText(mesFormatado);
+
+        // TODO Busca os dados do banco de dados
     }
 
     /**
@@ -39,6 +68,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelBotoesAdicionarTransacao = new javax.swing.JPanel();
         jButtonAdicionarReceita = new javax.swing.JButton();
         jButtonAdicionarDespesa = new javax.swing.JButton();
+        jLabelMesSelecionado = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuConfiguracoes = new javax.swing.JMenu();
         jMenuItemGerenciarCategorias = new javax.swing.JMenuItem();
@@ -125,20 +155,25 @@ public class Dashboard extends javax.swing.JFrame {
             .addComponent(jButtonAdicionarDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jLabelMesSelecionado.setText("Mês");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanelReceitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelDespesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelReceitas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelDespesas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelSaldo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelDashboard)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanelBotoesAdicionarTransacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanelBotoesAdicionarTransacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelMesSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -148,6 +183,8 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelBotoesAdicionarTransacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(9, 9, 9)
+                .addComponent(jLabelMesSelecionado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelReceitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -168,6 +205,11 @@ public class Dashboard extends javax.swing.JFrame {
         jMenuConfiguracoes.add(jMenuItemGerenciarCategorias);
 
         jMenuItemDefinirMes.setText("Definir Mês");
+        jMenuItemDefinirMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDefinirMesActionPerformed(evt);
+            }
+        });
         jMenuConfiguracoes.add(jMenuItemDefinirMes);
 
         jMenuBar.add(jMenuConfiguracoes);
@@ -237,10 +279,53 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAdicionarDespesaActionPerformed
 
+    private void jMenuItemDefinirMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDefinirMesActionPerformed
+        // Cria os componentes do diálogo
+
+        // Spinner para o MÊS, com valor inicial do mês atual, mínimo 1, máximo 12
+        JSpinner spinnerMes = new JSpinner(new SpinnerNumberModel(
+                mesSelecionado.getMonthValue(), 1, 12, 1
+        ));
+
+        // Spinner para o ANO, com valor inicial do ano atual, e um range razoável
+        JSpinner spinnerAno = new JSpinner(new SpinnerNumberModel(
+                mesSelecionado.getYear(), 2000, 2100, 1
+        ));
+
+        // Monta o painel que ficará dentro do diálogo
+        JPanel painelSelecao = new JPanel();
+        painelSelecao.add(new JLabel("Mês:"));
+        painelSelecao.add(spinnerMes);
+        painelSelecao.add(new JLabel("Ano:"));
+        painelSelecao.add(spinnerAno);
+
+        // Exibe o JOptionPane
+        int resultado = JOptionPane.showConfirmDialog(
+                this, // Janela pai (o próprio Dashboard)
+                painelSelecao, // Componente customizado
+                "Selecione o Mês e Ano", // Título da janela
+                JOptionPane.OK_CANCEL_OPTION, // Botões OK e Cancelar
+                JOptionPane.PLAIN_MESSAGE // Ícone
+        );
+
+        // Processa o resultado
+        if (resultado == JOptionPane.OK_OPTION) {
+            int ano = (int) spinnerAno.getValue();
+            int mes = (int) spinnerMes.getValue();
+
+            // Atualiza a variável com a nova data escolhida
+            this.mesSelecionado = YearMonth.of(ano, mes);
+
+            // Chama o método para recarregar os dados da tela
+            atualizarDashboard();
+        }
+    }//GEN-LAST:event_jMenuItemDefinirMesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdicionarDespesa;
     private javax.swing.JButton jButtonAdicionarReceita;
     private javax.swing.JLabel jLabelDashboard;
+    private javax.swing.JLabel jLabelMesSelecionado;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenuAjuda;
     private javax.swing.JMenuBar jMenuBar;
