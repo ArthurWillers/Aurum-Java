@@ -287,9 +287,9 @@ public class Dashboard extends javax.swing.JFrame {
                 mesSelecionado.getMonthValue(), 1, 12, 1
         ));
 
-        // Spinner para o ANO, com valor inicial do ano atual, e um range razoável
+        // Spinner para o ANO, com valor inicial do ano atual
         JSpinner spinnerAno = new JSpinner(new SpinnerNumberModel(
-                mesSelecionado.getYear(), 2000, 2100, 1
+                mesSelecionado.getYear(), 1900, 2500, 1
         ));
 
         // Monta o painel que ficará dentro do diálogo
@@ -308,15 +308,10 @@ public class Dashboard extends javax.swing.JFrame {
                 JOptionPane.PLAIN_MESSAGE // Ícone
         );
 
-        // Processa o resultado
         if (resultado == JOptionPane.OK_OPTION) {
             int ano = (int) spinnerAno.getValue();
             int mes = (int) spinnerMes.getValue();
-
-            // Atualiza a variável com a nova data escolhida
             this.mesSelecionado = YearMonth.of(ano, mes);
-
-            // Chama o método para recarregar os dados da tela
             atualizarDashboard();
         }
     }//GEN-LAST:event_jMenuItemDefinirMesActionPerformed
