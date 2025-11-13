@@ -280,14 +280,12 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAdicionarDespesaActionPerformed
 
     private void jMenuItemDefinirMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDefinirMesActionPerformed
-        // Cria os componentes do diálogo
-
         // Spinner para o MÊS, com valor inicial do mês atual, mínimo 1, máximo 12
         JSpinner spinnerMes = new JSpinner(new SpinnerNumberModel(
                 mesSelecionado.getMonthValue(), 1, 12, 1
         ));
 
-        // Spinner para o ANO, com valor inicial do ano atual
+        // Spinner para o ANO, com valor inicial do ano atual, minimo 1900, máximo 2500
         JSpinner spinnerAno = new JSpinner(new SpinnerNumberModel(
                 mesSelecionado.getYear(), 1900, 2500, 1
         ));
