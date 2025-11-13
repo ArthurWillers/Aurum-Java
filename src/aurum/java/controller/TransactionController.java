@@ -13,7 +13,7 @@ import java.time.YearMonth;
 
 /**
  *
- * @author Ethan
+ * @author ArthurWillers
  */
 public class TransactionController {
 
