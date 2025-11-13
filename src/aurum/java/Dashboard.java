@@ -4,6 +4,9 @@
  */
 package aurum.java;
 
+import aurum.java.controller.TransactionController;
+import java.awt.Color;
+import java.text.NumberFormat;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -45,7 +48,26 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabelMesSelecionado.setText(mesFormatado);
 
-        // TODO Busca os dados do banco de dados
+        TransactionController transactionController = new TransactionController();
+        double[] totais = transactionController.getDashboardTotals(this.mesSelecionado);
+
+        double receitas = totais[0];
+        double despesas = totais[1];
+        double saldo = receitas - despesas;
+
+        NumberFormat formatadorMoeda = NumberFormat.getCurrencyInstance(localeBrasil);
+        jLabelReceitas.setText(formatadorMoeda.format(receitas));
+        jLabelDespesas.setText(formatadorMoeda.format(despesas));
+        jLabelSaldo.setText(formatadorMoeda.format(saldo));
+
+        if (saldo < 0) {
+            jLabelSaldo.setForeground(new Color(204, 0, 0));
+        } else if (saldo > 0) {
+            jLabelSaldo.setForeground(new Color(0, 204, 0));
+        } else {
+            jLabelSaldo.setForeground(Color.BLACK);
+        }
+
     }
 
     /**
@@ -63,8 +85,11 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabelDashboard = new javax.swing.JLabel();
         jPanelReceitas = new javax.swing.JPanel();
+        jLabelReceitas = new javax.swing.JLabel();
         jPanelDespesas = new javax.swing.JPanel();
+        jLabelDespesas = new javax.swing.JLabel();
         jPanelSaldo = new javax.swing.JPanel();
+        jLabelSaldo = new javax.swing.JLabel();
         jPanelBotoesAdicionarTransacao = new javax.swing.JPanel();
         jButtonAdicionarReceita = new javax.swing.JButton();
         jButtonAdicionarDespesa = new javax.swing.JButton();
@@ -92,41 +117,70 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanelReceitas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 204, 51))); // NOI18N
 
+        jLabelReceitas.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabelReceitas.setForeground(new java.awt.Color(0, 204, 0));
+        jLabelReceitas.setText("R$ 0,00");
+
         javax.swing.GroupLayout jPanelReceitasLayout = new javax.swing.GroupLayout(jPanelReceitas);
         jPanelReceitas.setLayout(jPanelReceitasLayout);
         jPanelReceitasLayout.setHorizontalGroup(
             jPanelReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanelReceitasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelReceitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelReceitasLayout.setVerticalGroup(
             jPanelReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 99, Short.MAX_VALUE)
+            .addGroup(jPanelReceitasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelReceitas)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelDespesas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Despesas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(204, 0, 0))); // NOI18N
+
+        jLabelDespesas.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabelDespesas.setForeground(new java.awt.Color(204, 0, 0));
+        jLabelDespesas.setText("R$ 0,00");
 
         javax.swing.GroupLayout jPanelDespesasLayout = new javax.swing.GroupLayout(jPanelDespesas);
         jPanelDespesas.setLayout(jPanelDespesasLayout);
         jPanelDespesasLayout.setHorizontalGroup(
             jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanelDespesasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelDespesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelDespesasLayout.setVerticalGroup(
             jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 97, Short.MAX_VALUE)
+            .addGroup(jPanelDespesasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelDespesas)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelSaldo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Saldo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 153))); // NOI18N
+
+        jLabelSaldo.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabelSaldo.setText("R$ 0,00");
 
         javax.swing.GroupLayout jPanelSaldoLayout = new javax.swing.GroupLayout(jPanelSaldo);
         jPanelSaldo.setLayout(jPanelSaldoLayout);
         jPanelSaldoLayout.setHorizontalGroup(
             jPanelSaldoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanelSaldoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelSaldoLayout.setVerticalGroup(
             jPanelSaldoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 98, Short.MAX_VALUE)
+            .addGroup(jPanelSaldoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelSaldo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jButtonAdicionarReceita.setText("+ Adicionar Receita");
@@ -318,7 +372,10 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAdicionarDespesa;
     private javax.swing.JButton jButtonAdicionarReceita;
     private javax.swing.JLabel jLabelDashboard;
+    private javax.swing.JLabel jLabelDespesas;
     private javax.swing.JLabel jLabelMesSelecionado;
+    private javax.swing.JLabel jLabelReceitas;
+    private javax.swing.JLabel jLabelSaldo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenuAjuda;
     private javax.swing.JMenuBar jMenuBar;
