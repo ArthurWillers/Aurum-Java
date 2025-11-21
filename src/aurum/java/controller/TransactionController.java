@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.YearMonth;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,9 +35,8 @@ public class TransactionController {
         double income = 0.0;
         double expense = 0.0;
 
-        try {
-            Connection conn = Connect_db.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = Connect_db.getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, month.getYear());
             stmt.setInt(2, month.getMonthValue());
@@ -52,7 +52,12 @@ public class TransactionController {
             }
 
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar totais do dashboard: " + e.getMessage());
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Não foi possível buscar os totais do dashboard.\nDetalhes: " + e.getMessage(),
+                    "Erro ao Buscar Totais",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
 
         return new double[]{income, expense};
