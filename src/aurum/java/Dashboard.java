@@ -34,6 +34,9 @@ public class Dashboard extends javax.swing.JFrame {
         // Define o mês atual como padrão ao iniciar
         this.mesSelecionado = YearMonth.now();
 
+        // Adiciona a ABA de Categorias
+        PanelCategorias categoriasPanel = new PanelCategorias();
+        jTabbedPane.addTab("Gerenciar Categorias", categoriasPanel);
         atualizarDashboard();
     }
 
@@ -82,27 +85,21 @@ public class Dashboard extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JSeparator();
-        jPanel1 = new javax.swing.JPanel();
-        jLabelDashboard = new javax.swing.JLabel();
-        jPanelReceitas = new javax.swing.JPanel();
+        jTabbedPane = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jLabelDashboard1 = new javax.swing.JLabel();
+        jPanelReceitas1 = new javax.swing.JPanel();
         jLabelReceitas = new javax.swing.JLabel();
-        jPanelDespesas = new javax.swing.JPanel();
+        jPanelDespesas1 = new javax.swing.JPanel();
         jLabelDespesas = new javax.swing.JLabel();
-        jPanelSaldo = new javax.swing.JPanel();
+        jPanelSaldo1 = new javax.swing.JPanel();
         jLabelSaldo = new javax.swing.JLabel();
-        jPanelBotoesAdicionarTransacao = new javax.swing.JPanel();
+        jPanelBotoesAdicionarTransacao1 = new javax.swing.JPanel();
         jButtonAdicionarReceita = new javax.swing.JButton();
         jButtonAdicionarDespesa = new javax.swing.JButton();
         jLabelMesSelecionado = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuConfiguracoes = new javax.swing.JMenu();
-        jMenuItemGerenciarCategorias = new javax.swing.JMenuItem();
-        jMenuItemDefinirMes = new javax.swing.JMenuItem();
-        jMenuTrasacoes = new javax.swing.JMenu();
-        jMenuItemReceitas = new javax.swing.JMenuItem();
-        jMenuItemDespesas = new javax.swing.JMenuItem();
-        jMenuAjuda = new javax.swing.JMenu();
-        jMenuItemSobre = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -112,72 +109,72 @@ public class Dashboard extends javax.swing.JFrame {
         setTitle("Aurum");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jLabelDashboard.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabelDashboard.setText("Dashboard");
+        jLabelDashboard1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabelDashboard1.setText("Dashboard");
 
-        jPanelReceitas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 204, 51))); // NOI18N
+        jPanelReceitas1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 204, 51))); // NOI18N
 
         jLabelReceitas.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabelReceitas.setForeground(new java.awt.Color(0, 204, 0));
         jLabelReceitas.setText("R$ 0,00");
 
-        javax.swing.GroupLayout jPanelReceitasLayout = new javax.swing.GroupLayout(jPanelReceitas);
-        jPanelReceitas.setLayout(jPanelReceitasLayout);
-        jPanelReceitasLayout.setHorizontalGroup(
-            jPanelReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelReceitasLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelReceitas1Layout = new javax.swing.GroupLayout(jPanelReceitas1);
+        jPanelReceitas1.setLayout(jPanelReceitas1Layout);
+        jPanelReceitas1Layout.setHorizontalGroup(
+            jPanelReceitas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelReceitas1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelReceitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanelReceitasLayout.setVerticalGroup(
-            jPanelReceitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelReceitasLayout.createSequentialGroup()
+        jPanelReceitas1Layout.setVerticalGroup(
+            jPanelReceitas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelReceitas1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelReceitas)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelDespesas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Despesas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(204, 0, 0))); // NOI18N
+        jPanelDespesas1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Despesas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(204, 0, 0))); // NOI18N
 
         jLabelDespesas.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabelDespesas.setForeground(new java.awt.Color(204, 0, 0));
         jLabelDespesas.setText("R$ 0,00");
 
-        javax.swing.GroupLayout jPanelDespesasLayout = new javax.swing.GroupLayout(jPanelDespesas);
-        jPanelDespesas.setLayout(jPanelDespesasLayout);
-        jPanelDespesasLayout.setHorizontalGroup(
-            jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelDespesasLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelDespesas1Layout = new javax.swing.GroupLayout(jPanelDespesas1);
+        jPanelDespesas1.setLayout(jPanelDespesas1Layout);
+        jPanelDespesas1Layout.setHorizontalGroup(
+            jPanelDespesas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDespesas1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelDespesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanelDespesasLayout.setVerticalGroup(
-            jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelDespesasLayout.createSequentialGroup()
+        jPanelDespesas1Layout.setVerticalGroup(
+            jPanelDespesas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDespesas1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelDespesas)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelSaldo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Saldo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 153))); // NOI18N
+        jPanelSaldo1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Saldo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 153))); // NOI18N
 
         jLabelSaldo.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabelSaldo.setText("R$ 0,00");
 
-        javax.swing.GroupLayout jPanelSaldoLayout = new javax.swing.GroupLayout(jPanelSaldo);
-        jPanelSaldo.setLayout(jPanelSaldoLayout);
-        jPanelSaldoLayout.setHorizontalGroup(
-            jPanelSaldoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelSaldoLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelSaldo1Layout = new javax.swing.GroupLayout(jPanelSaldo1);
+        jPanelSaldo1.setLayout(jPanelSaldo1Layout);
+        jPanelSaldo1Layout.setHorizontalGroup(
+            jPanelSaldo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSaldo1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanelSaldoLayout.setVerticalGroup(
-            jPanelSaldoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelSaldoLayout.createSequentialGroup()
+        jPanelSaldo1Layout.setVerticalGroup(
+            jPanelSaldo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSaldo1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelSaldo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -186,6 +183,11 @@ public class Dashboard extends javax.swing.JFrame {
         jButtonAdicionarReceita.setText("+ Adicionar Receita");
         jButtonAdicionarReceita.setAlignmentY(0.0F);
         jButtonAdicionarReceita.setMaximumSize(new java.awt.Dimension(135, 24));
+        jButtonAdicionarReceita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdicionarReceitaActionPerformed(evt);
+            }
+        });
 
         jButtonAdicionarDespesa.setText("- Adicionar Despesa");
         jButtonAdicionarDespesa.addActionListener(new java.awt.event.ActionListener() {
@@ -194,106 +196,69 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanelBotoesAdicionarTransacaoLayout = new javax.swing.GroupLayout(jPanelBotoesAdicionarTransacao);
-        jPanelBotoesAdicionarTransacao.setLayout(jPanelBotoesAdicionarTransacaoLayout);
-        jPanelBotoesAdicionarTransacaoLayout.setHorizontalGroup(
-            jPanelBotoesAdicionarTransacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotoesAdicionarTransacaoLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelBotoesAdicionarTransacao1Layout = new javax.swing.GroupLayout(jPanelBotoesAdicionarTransacao1);
+        jPanelBotoesAdicionarTransacao1.setLayout(jPanelBotoesAdicionarTransacao1Layout);
+        jPanelBotoesAdicionarTransacao1Layout.setHorizontalGroup(
+            jPanelBotoesAdicionarTransacao1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotoesAdicionarTransacao1Layout.createSequentialGroup()
                 .addComponent(jButtonAdicionarReceita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAdicionarDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanelBotoesAdicionarTransacaoLayout.setVerticalGroup(
-            jPanelBotoesAdicionarTransacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanelBotoesAdicionarTransacao1Layout.setVerticalGroup(
+            jPanelBotoesAdicionarTransacao1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jButtonAdicionarReceita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonAdicionarDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jLabelMesSelecionado.setText("Mês");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelReceitas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelDespesas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelSaldo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelDashboard)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelReceitas1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelDespesas1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelSaldo1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabelDashboard1)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanelBotoesAdicionarTransacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanelBotoesAdicionarTransacao1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabelMesSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelBotoesAdicionarTransacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelDashboard1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelBotoesAdicionarTransacao1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(9, 9, 9)
                 .addComponent(jLabelMesSelecionado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelReceitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelReceitas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelDespesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelDespesas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelSaldo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jMenuConfiguracoes.setText("Configurações");
+        jTabbedPane.addTab("Dashboard", jPanel2);
 
-        jMenuItemGerenciarCategorias.setText("Gerenciar Categorias");
-        jMenuItemGerenciarCategorias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemGerenciarCategoriasActionPerformed(evt);
+        jMenuConfiguracoes.setText("Definir Mês");
+        jMenuConfiguracoes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuConfiguracoesMouseClicked(evt);
             }
         });
-        jMenuConfiguracoes.add(jMenuItemGerenciarCategorias);
-
-        jMenuItemDefinirMes.setText("Definir Mês");
-        jMenuItemDefinirMes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemDefinirMesActionPerformed(evt);
-            }
-        });
-        jMenuConfiguracoes.add(jMenuItemDefinirMes);
-
         jMenuBar.add(jMenuConfiguracoes);
-
-        jMenuTrasacoes.setText("Transações");
-
-        jMenuItemReceitas.setText("Receitas");
-        jMenuItemReceitas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemReceitasActionPerformed(evt);
-            }
-        });
-        jMenuTrasacoes.add(jMenuItemReceitas);
-
-        jMenuItemDespesas.setText("Despesas");
-        jMenuTrasacoes.add(jMenuItemDespesas);
-
-        jMenuBar.add(jMenuTrasacoes);
-
-        jMenuAjuda.setText("Ajuda");
-
-        jMenuItemSobre.setText("Sobre");
-        jMenuItemSobre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemSobreActionPerformed(evt);
-            }
-        });
-        jMenuAjuda.add(jMenuItemSobre);
-
-        jMenuBar.add(jMenuAjuda);
 
         setJMenuBar(jMenuBar);
 
@@ -301,39 +266,27 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItemGerenciarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGerenciarCategoriasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemGerenciarCategoriasActionPerformed
-
-    private void jMenuItemReceitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReceitasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemReceitasActionPerformed
-
-    private void jMenuItemSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSobreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemSobreActionPerformed
-
     private void jButtonAdicionarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarDespesaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAdicionarDespesaActionPerformed
 
-    private void jMenuItemDefinirMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDefinirMesActionPerformed
+    private void jMenuConfiguracoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuConfiguracoesMouseClicked
         // Spinner para o MÊS, com valor inicial do mês atual, mínimo 1, máximo 12
         JSpinner spinnerMes = new JSpinner(new SpinnerNumberModel(
                 mesSelecionado.getMonthValue(), 1, 12, 1
@@ -366,32 +319,30 @@ public class Dashboard extends javax.swing.JFrame {
             this.mesSelecionado = YearMonth.of(ano, mes);
             atualizarDashboard();
         }
-    }//GEN-LAST:event_jMenuItemDefinirMesActionPerformed
+    }//GEN-LAST:event_jMenuConfiguracoesMouseClicked
+
+    private void jButtonAdicionarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarReceitaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAdicionarReceitaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdicionarDespesa;
     private javax.swing.JButton jButtonAdicionarReceita;
-    private javax.swing.JLabel jLabelDashboard;
+    private javax.swing.JLabel jLabelDashboard1;
     private javax.swing.JLabel jLabelDespesas;
     private javax.swing.JLabel jLabelMesSelecionado;
     private javax.swing.JLabel jLabelReceitas;
     private javax.swing.JLabel jLabelSaldo;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenuAjuda;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuConfiguracoes;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItemDefinirMes;
-    private javax.swing.JMenuItem jMenuItemDespesas;
-    private javax.swing.JMenuItem jMenuItemGerenciarCategorias;
-    private javax.swing.JMenuItem jMenuItemReceitas;
-    private javax.swing.JMenuItem jMenuItemSobre;
-    private javax.swing.JMenu jMenuTrasacoes;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanelBotoesAdicionarTransacao;
-    private javax.swing.JPanel jPanelDespesas;
-    private javax.swing.JPanel jPanelReceitas;
-    private javax.swing.JPanel jPanelSaldo;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelBotoesAdicionarTransacao1;
+    private javax.swing.JPanel jPanelDespesas1;
+    private javax.swing.JPanel jPanelReceitas1;
+    private javax.swing.JPanel jPanelSaldo1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTabbedPane jTabbedPane;
     // End of variables declaration//GEN-END:variables
 }
