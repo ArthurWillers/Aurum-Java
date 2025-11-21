@@ -14,10 +14,9 @@ import javax.swing.JOptionPane;
 public class CategoriesFormView extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CategoriesFormView.class.getName());
-    private Category category; // A categoria sendo editada/criada
-    private boolean salvo = false; // Flag para indicar se o usuário clicou em SalvarF
+    private Category category;
+    private boolean salvo = false;
 
-    // Construtor principal (Chamado pelo NetBeans, será o modo CRIAÇÃO se a Category for null)
     public CategoriesFormView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -25,22 +24,17 @@ public class CategoriesFormView extends javax.swing.JDialog {
         this.setLocationRelativeTo(parent);
     }
 
-    // Construtor de EDIÇÃO (Recebe a categoria a ser editada)
     public CategoriesFormView(java.awt.Frame parent, boolean modal, Category categoryParaEditar) {
-        this(parent, modal); // Chama o construtor anterior
-
-        // Define a categoria e preenche a tela
+        this(parent, modal);
         this.category = categoryParaEditar;
         preencherCampos();
     }
 
-    // Método para preencher os campos no modo edição
     private void preencherCampos() {
         if (category != null) {
             this.setTitle("Editar Categoria ID: " + category.getId());
             jTextFieldNome.setText(category.getName());
 
-            // Seleciona o Radio Button correto
             if ("income".equals(category.getType())) {
                 jRadioButtonReceita.setSelected(true);
             } else {
@@ -48,11 +42,10 @@ public class CategoriesFormView extends javax.swing.JDialog {
             }
         } else {
             this.setTitle("Nova Categoria");
-            jRadioButtonReceita.setSelected(true); // Padrão: Receita
+            jRadioButtonReceita.setSelected(true);
         }
     }
 
-    // Getters para a tela pai (PanelCategorias)
     public boolean isSalvo() {
         return salvo;
     }
@@ -228,33 +221,39 @@ public class CategoriesFormView extends javax.swing.JDialog {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         if (jTextFieldNome.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "O nome da categoria é obrigatório!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(
+                this, 
+                "O nome da categoria é obrigatório!", 
+                "Campo Obrigatório", 
+                JOptionPane.WARNING_MESSAGE
+            );
             return;
         }
 
         if (!jRadioButtonReceita.isSelected() && !jRadioButtonDespesa.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Selecione o tipo (Receita ou Despesa)!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(
+                this, 
+                "Selecione o tipo (Receita ou Despesa)!", 
+                "Campo Obrigatório", 
+                JOptionPane.WARNING_MESSAGE
+            );
             return;
         }
 
-        // 1. Prepara o objeto Category
         if (category == null) {
-            // Modo CRIAÇÃO
             category = new Category();
         }
-        // Se já existia (Edição), o ID já está no objeto. Se é novo, o ID é zero.
 
         category.setName(jTextFieldNome.getText().trim());
         category.setType(jRadioButtonReceita.isSelected() ? "income" : "expense");
 
-        // 2. Marca como salvo e fecha
         this.salvo = true;
         this.dispose();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        this.salvo = false; // Garante que o flag de salvamento é falso
-        this.dispose();    // Fecha a janela
+        this.salvo = false;
+        this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jTextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeActionPerformed
