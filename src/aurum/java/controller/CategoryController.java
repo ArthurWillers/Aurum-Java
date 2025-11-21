@@ -36,10 +36,10 @@ public class CategoryController {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(
-                null,
-                "Não foi possível salvar a categoria.\nDetalhes: " + e.getMessage(),
-                "Erro ao Salvar Categoria",
-                JOptionPane.ERROR_MESSAGE
+                    null,
+                    "Não foi possível salvar a categoria.\nDetalhes: " + e.getMessage(),
+                    "Erro ao Salvar Categoria",
+                    JOptionPane.ERROR_MESSAGE
             );
         }
     }
@@ -61,10 +61,10 @@ public class CategoryController {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(
-                null,
-                "Não foi possível atualizar a categoria.\nDetalhes: " + e.getMessage(),
-                "Erro ao Atualizar Categoria",
-                JOptionPane.ERROR_MESSAGE
+                    null,
+                    "Não foi possível atualizar a categoria.\nDetalhes: " + e.getMessage(),
+                    "Erro ao Atualizar Categoria",
+                    JOptionPane.ERROR_MESSAGE
             );
         }
     }
@@ -82,15 +82,15 @@ public class CategoryController {
 
             stmt.setInt(1, id);
             int rowsAffected = stmt.executeUpdate();
-            
+
             return rowsAffected > 0; // Retorna true se pelo menos uma linha foi afetada
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(
-                null,
-                "Não foi possível apagar a categoria.\nDetalhes: " + e.getMessage(),
-                "Erro ao Apagar Categoria",
-                JOptionPane.ERROR_MESSAGE
+                    null,
+                    "Não foi possível apagar a categoria.\nDetalhes: " + e.getMessage(),
+                    "Erro ao Apagar Categoria",
+                    JOptionPane.ERROR_MESSAGE
             );
             return false;
         }
@@ -116,10 +116,10 @@ public class CategoryController {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(
-                null,
-                "Não foi possível listar as categorias.\nDetalhes: " + e.getMessage(),
-                "Erro ao Listar Categorias",
-                JOptionPane.ERROR_MESSAGE
+                    null,
+                    "Não foi possível listar as categorias.\nDetalhes: " + e.getMessage(),
+                    "Erro ao Listar Categorias",
+                    JOptionPane.ERROR_MESSAGE
             );
         }
         return categories;
@@ -148,12 +148,45 @@ public class CategoryController {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(
-                null,
-                "Não foi possível buscar a categoria.\nDetalhes: " + e.getMessage(),
-                "Erro ao Buscar Categoria",
-                JOptionPane.ERROR_MESSAGE
+                    null,
+                    "Não foi possível buscar a categoria.\nDetalhes: " + e.getMessage(),
+                    "Erro ao Buscar Categoria",
+                    JOptionPane.ERROR_MESSAGE
             );
         }
         return category;
+    }
+
+    /**
+     * Lista categorias filtradas por tipo ("income" ou "expense").
+     * @param type
+     * @return
+     */
+    public List<Category> listByType(String type) {
+        String sql = "SELECT * FROM categories WHERE type = ? ORDER BY name ASC";
+        List<Category> categories = new ArrayList<>();
+
+        try (Connection conn = Connect_db.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, type);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Category category = new Category();
+                    category.setId(rs.getInt("id"));
+                    category.setName(rs.getString("name"));
+                    category.setType(rs.getString("type"));
+                    categories.add(category);
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Não foi possível listar as categorias por tipo.\nDetalhes: " + e.getMessage(),
+                    "Erro ao Listar Categorias",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return categories;
     }
 }
