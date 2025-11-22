@@ -5,6 +5,7 @@
 package aurum.java;
 
 import aurum.java.controller.TransactionController;
+import aurum.java.model.Transaction;
 import java.awt.Color;
 import java.text.NumberFormat;
 import java.time.YearMonth;
@@ -24,7 +25,8 @@ public class Dashboard extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
 
-    private YearMonth mesSelecionado; // Variável para guardar o mês/ano
+    private YearMonth mesSelecionado;
+    private PanelTransactions transactionsPanel;
 
     /**
      * Creates new form Dashboard
@@ -37,10 +39,13 @@ public class Dashboard extends javax.swing.JFrame {
         // Adiciona a ABA de Categorias
         PanelCategorias categoriasPanel = new PanelCategorias();
         jTabbedPane.addTab("Gerenciar Categorias", categoriasPanel);
+        
+        transactionsPanel = new PanelTransactions(this);
+        jTabbedPane.addTab("Gerenciar Transações", transactionsPanel);
         atualizarDashboard();
     }
 
-    private void atualizarDashboard() {
+    public void atualizarDashboard() {
         // Atualiza o JLabel com o mês selecionado
         Locale localeBrasil = new Locale("pt", "BR");
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("MMMM 'de' yyyy", localeBrasil);
@@ -71,6 +76,13 @@ public class Dashboard extends javax.swing.JFrame {
             jLabelSaldo.setForeground(Color.BLACK);
         }
 
+        if (transactionsPanel != null) {
+            transactionsPanel.atualizarTabela();
+        }
+    }
+
+    public YearMonth getMesSelecionado() {
+        return mesSelecionado;
     }
 
     /**
@@ -94,10 +106,9 @@ public class Dashboard extends javax.swing.JFrame {
         jLabelDespesas = new javax.swing.JLabel();
         jPanelSaldo1 = new javax.swing.JPanel();
         jLabelSaldo = new javax.swing.JLabel();
-        jPanelBotoesAdicionarTransacao1 = new javax.swing.JPanel();
-        jButtonAdicionarReceita = new javax.swing.JButton();
-        jButtonAdicionarDespesa = new javax.swing.JButton();
         jLabelMesSelecionado = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jButtonAdicionarTransação = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuConfiguracoes = new javax.swing.JMenu();
 
@@ -124,7 +135,7 @@ public class Dashboard extends javax.swing.JFrame {
             jPanelReceitas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelReceitas1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelReceitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelReceitas, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelReceitas1Layout.setVerticalGroup(
@@ -180,38 +191,28 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButtonAdicionarReceita.setText("+ Adicionar Receita");
-        jButtonAdicionarReceita.setAlignmentY(0.0F);
-        jButtonAdicionarReceita.setMaximumSize(new java.awt.Dimension(135, 24));
-        jButtonAdicionarReceita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAdicionarReceitaActionPerformed(evt);
-            }
-        });
-
-        jButtonAdicionarDespesa.setText("- Adicionar Despesa");
-        jButtonAdicionarDespesa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAdicionarDespesaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelBotoesAdicionarTransacao1Layout = new javax.swing.GroupLayout(jPanelBotoesAdicionarTransacao1);
-        jPanelBotoesAdicionarTransacao1.setLayout(jPanelBotoesAdicionarTransacao1Layout);
-        jPanelBotoesAdicionarTransacao1Layout.setHorizontalGroup(
-            jPanelBotoesAdicionarTransacao1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotoesAdicionarTransacao1Layout.createSequentialGroup()
-                .addComponent(jButtonAdicionarReceita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAdicionarDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelBotoesAdicionarTransacao1Layout.setVerticalGroup(
-            jPanelBotoesAdicionarTransacao1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButtonAdicionarReceita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButtonAdicionarDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
         jLabelMesSelecionado.setText("Mês");
+
+        jButtonAdicionarTransação.setText("Adicionar Transação");
+        jButtonAdicionarTransação.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdicionarTransaçãoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonAdicionarTransação, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jButtonAdicionarTransação, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -224,12 +225,12 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jPanelDespesas1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelSaldo1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabelDashboard1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanelBotoesAdicionarTransacao1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabelMesSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabelDashboard1)
+                        .addGap(12, 12, 12)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -237,8 +238,8 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelDashboard1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelBotoesAdicionarTransacao1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelDashboard1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addComponent(jLabelMesSelecionado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -268,7 +269,7 @@ public class Dashboard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -282,9 +283,24 @@ public class Dashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonAdicionarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarDespesaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAdicionarDespesaActionPerformed
+    private void jButtonAdicionarTransaçãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarTransaçãoActionPerformed
+        TransactionsFormView form = new TransactionsFormView(null, true, "income");
+        form.setLocationRelativeTo(this);
+        form.setVisible(true);
+
+        if (form.isSalvo()) {
+            Transaction novaTransacao = form.getTransaction();
+            TransactionController controller = new TransactionController();
+            controller.save(novaTransacao);
+            atualizarDashboard();
+            JOptionPane.showMessageDialog(
+                this, 
+                "Transação adicionada com sucesso!", 
+                "✓ Sucesso", 
+                JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_jButtonAdicionarTransaçãoActionPerformed
 
     private void jMenuConfiguracoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuConfiguracoesMouseClicked
         // Spinner para o MÊS, com valor inicial do mês atual, mínimo 1, máximo 12
@@ -321,13 +337,8 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuConfiguracoesMouseClicked
 
-    private void jButtonAdicionarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarReceitaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAdicionarReceitaActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAdicionarDespesa;
-    private javax.swing.JButton jButtonAdicionarReceita;
+    private javax.swing.JButton jButtonAdicionarTransação;
     private javax.swing.JLabel jLabelDashboard1;
     private javax.swing.JLabel jLabelDespesas;
     private javax.swing.JLabel jLabelMesSelecionado;
@@ -337,8 +348,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuConfiguracoes;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanelBotoesAdicionarTransacao1;
     private javax.swing.JPanel jPanelDespesas1;
     private javax.swing.JPanel jPanelReceitas1;
     private javax.swing.JPanel jPanelSaldo1;

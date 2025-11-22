@@ -4,10 +4,13 @@
  */
 package aurum.java;
 
-import aurum.java.controller.CategoryController;
-import aurum.java.model.Category;
+import aurum.java.controller.TransactionController;
+import aurum.java.model.Transaction;
 import java.awt.HeadlessException;
+import java.text.NumberFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,38 +18,47 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Ethan
  */
-public class PanelCategorias extends javax.swing.JPanel {
+public class PanelTransactions extends javax.swing.JPanel {
 
-    private CategoryController controller;
+    private TransactionController controller;
+    private Dashboard dashboard;
 
     /**
-     * Creates new form PanelCategorias
+     * Creates new form PanelTransactions
      */
-    public PanelCategorias() {
+    public PanelTransactions(Dashboard dashboard) {
         initComponents();
-        controller = new CategoryController();
+        this.dashboard = dashboard;
+        controller = new TransactionController();
         atualizarTabela();
     }
 
-    private void atualizarTabela() {
-        List<Category> lista = controller.listAll();
-        DefaultTableModel model = (DefaultTableModel) jTableCategories.getModel();
+    public void atualizarTabela() {
+        List<Transaction> lista = controller.listByMonth(dashboard.getMesSelecionado());
+        DefaultTableModel model = (DefaultTableModel) jTableTransactions.getModel();
         model.setRowCount(0);
 
-        for (Category c : lista) {
-            String tipoFormatado = "";
-            tipoFormatado = switch (c.getType()) {
-                case "income" ->
-                    "Receita";
-                case "expense" ->
-                    "Despesa";
-                default ->
-                    c.getType();
+        Locale localeBrasil = new Locale("pt", "BR");
+        NumberFormat formatadorMoeda = NumberFormat.getCurrencyInstance(localeBrasil);
+        DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        for (Transaction t : lista) {
+            String tipoFormatado = switch (t.getType()) {
+                case "income" -> "Receita";
+                case "expense" -> "Despesa";
+                default -> t.getType();
             };
 
+            String valorFormatado = formatadorMoeda.format(t.getAmount());
+            String dataFormatada = t.getDate().format(formatadorData);
+            String categoriaNome = (t.getCategory() != null) ? t.getCategory().getName() : "Sem categoria";
+
             model.addRow(new Object[]{
-                c.getId(),
-                c.getName(),
+                t.getId(),
+                t.getDescription(),
+                valorFormatado,
+                categoriaNome,
+                dataFormatada,
                 tipoFormatado
             });
         }
@@ -62,7 +74,7 @@ public class PanelCategorias extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCategories = new javax.swing.JTable();
+        jTableTransactions = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -71,19 +83,19 @@ public class PanelCategorias extends javax.swing.JPanel {
         jButtonEditar = new javax.swing.JButton();
         jButtonCriar = new javax.swing.JButton();
 
-        jTableCategories.setModel(new javax.swing.table.DefaultTableModel(
+        jTableTransactions.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Nome", "Tipo"
+                "ID", "Nome", "Valor", "Categoria", "Data", "Tipo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -94,9 +106,9 @@ public class PanelCategorias extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableCategories);
-        if (jTableCategories.getColumnModel().getColumnCount() > 0) {
-            jTableCategories.getColumnModel().getColumn(0).setMaxWidth(60);
+        jScrollPane1.setViewportView(jTableTransactions);
+        if (jTableTransactions.getColumnModel().getColumnCount() > 0) {
+            jTableTransactions.getColumnModel().getColumn(0).setMaxWidth(40);
         }
 
         jLabel1.setText("Digite o ID:");
@@ -148,7 +160,7 @@ public class PanelCategorias extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jButtonCriar.setText("Criar Nova Categoria");
+        jButtonCriar.setText("Criar Nova Transação");
         jButtonCriar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCriarActionPerformed(evt);
@@ -165,7 +177,7 @@ public class PanelCategorias extends javax.swing.JPanel {
                     .addComponent(jButtonCriar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 39, Short.MAX_VALUE)))
+                        .addGap(0, 242, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -174,7 +186,7 @@ public class PanelCategorias extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonCriar, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+                .addComponent(jButtonCriar, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -208,9 +220,9 @@ public class PanelCategorias extends javax.swing.JPanel {
             String idText = jTextFieldID.getText().trim();
             if (idText.isEmpty()) {
                 JOptionPane.showMessageDialog(
-                    this, 
-                    "Por favor, digite o ID da categoria que deseja excluir.", 
-                    "Campo Obrigatório", 
+                    this,
+                    "Por favor, digite o ID da transação que deseja excluir.",
+                    "Campo Obrigatório",
                     JOptionPane.WARNING_MESSAGE
                 );
                 return;
@@ -219,11 +231,11 @@ public class PanelCategorias extends javax.swing.JPanel {
             int idParaExcluir = Integer.parseInt(idText);
 
             int resposta = JOptionPane.showConfirmDialog(
-                    this,
-                    "Tem certeza que deseja EXCLUIR a categoria de ID " + idParaExcluir + "?\nIsso afetará todas as transações ligadas a ela (vão ficar sem categoria).",
-                    "⚠️ Confirmar Exclusão",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE
+                this,
+                "Tem certeza que deseja EXCLUIR a transação de ID " + idParaExcluir + "?",
+                "⚠️ Confirmar Exclusão",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
             );
 
             if (resposta == JOptionPane.YES_OPTION) {
@@ -231,18 +243,21 @@ public class PanelCategorias extends javax.swing.JPanel {
 
                 if (excluida) {
                     JOptionPane.showMessageDialog(
-                        this, 
-                        "Categoria excluída com sucesso!", 
-                        "✓ Sucesso", 
+                        this,
+                        "Transação excluída com sucesso!",
+                        "✓ Sucesso",
                         JOptionPane.INFORMATION_MESSAGE
                     );
                     jTextFieldID.setText("");
                     atualizarTabela();
+                    if (dashboard != null) {
+                        dashboard.atualizarDashboard();
+                    }
                 } else {
                     JOptionPane.showMessageDialog(
-                        this, 
-                        "Categoria não encontrada com o ID: " + idParaExcluir + "\nVerifique se o ID está correto.", 
-                        "Categoria Não Encontrada", 
+                        this,
+                        "Transação não encontrada com o ID: " + idParaExcluir + "\nVerifique se o ID está correto.",
+                        "Transação Não Encontrada",
                         JOptionPane.ERROR_MESSAGE
                     );
                 }
@@ -250,16 +265,16 @@ public class PanelCategorias extends javax.swing.JPanel {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(
-                this, 
-                "O ID deve ser um número inteiro válido.\nPor favor, verifique o valor digitado.", 
-                "Erro de Validação", 
+                this,
+                "O ID deve ser um número inteiro válido.\nPor favor, verifique o valor digitado.",
+                "Erro de Validação",
                 JOptionPane.ERROR_MESSAGE
             );
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(
-                this, 
-                "Erro ao excluir categoria.\nDetalhes: " + e.getMessage(), 
-                "Erro de Sistema", 
+                this,
+                "Erro ao excluir transação.\nDetalhes: " + e.getMessage(),
+                "Erro de Sistema",
                 JOptionPane.ERROR_MESSAGE
             );
         }
@@ -270,38 +285,41 @@ public class PanelCategorias extends javax.swing.JPanel {
             String idText = jTextFieldID.getText().trim();
             if (idText.isEmpty()) {
                 JOptionPane.showMessageDialog(
-                    this, 
-                    "Por favor, digite o ID da categoria que deseja editar.", 
-                    "Campo Obrigatório", 
+                    this,
+                    "Por favor, digite o ID da transação que deseja editar.",
+                    "Campo Obrigatório",
                     JOptionPane.WARNING_MESSAGE
                 );
                 return;
             }
 
             int id = Integer.parseInt(idText);
-            Category categoriaParaEditar = controller.getById(id);
+            Transaction transacaoParaEditar = controller.getById(id);
 
-            if (categoriaParaEditar == null) {
+            if (transacaoParaEditar == null) {
                 JOptionPane.showMessageDialog(
-                    this, 
-                    "Categoria não encontrada com o ID: " + id + "\nVerifique se o ID está correto.", 
-                    "Categoria Não Encontrada", 
+                    this,
+                    "Transação não encontrada com o ID: " + id + "\nVerifique se o ID está correto.",
+                    "Transação Não Encontrada",
                     JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
 
-            CategoriesFormView form = new CategoriesFormView(null, true, categoriaParaEditar);
+            TransactionsFormView form = new TransactionsFormView(null, true, transacaoParaEditar);
             form.setLocationRelativeTo(this);
             form.setVisible(true);
 
             if (form.isSalvo()) {
-                controller.update(form.getCategory());
+                controller.update(form.getTransaction());
                 atualizarTabela();
+                if (dashboard != null) {
+                    dashboard.atualizarDashboard();
+                }
                 JOptionPane.showMessageDialog(
-                    this, 
-                    "Categoria atualizada com sucesso!", 
-                    "✓ Sucesso", 
+                    this,
+                    "Transação atualizada com sucesso!",
+                    "✓ Sucesso",
                     JOptionPane.INFORMATION_MESSAGE
                 );
                 jTextFieldID.setText("");
@@ -309,33 +327,36 @@ public class PanelCategorias extends javax.swing.JPanel {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(
-                this, 
-                "O ID deve ser um número inteiro válido.\nPor favor, verifique o valor digitado.", 
-                "Erro de Validação", 
+                this,
+                "O ID deve ser um número inteiro válido.\nPor favor, verifique o valor digitado.",
+                "Erro de Validação",
                 JOptionPane.ERROR_MESSAGE
             );
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(
-                this, 
-                "Ocorreu um erro ao editar a categoria.\nDetalhes: " + e.getMessage(), 
-                "Erro de Sistema", 
+                this,
+                "Ocorreu um erro ao editar a transação.\nDetalhes: " + e.getMessage(),
+                "Erro de Sistema",
                 JOptionPane.ERROR_MESSAGE
             );
         }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCriarActionPerformed
-        CategoriesFormView form = new CategoriesFormView(null, true);
+        TransactionsFormView form = new TransactionsFormView(null, true, "income");
         form.setLocationRelativeTo(this);
         form.setVisible(true);
 
         if (form.isSalvo()) {
-            controller.save(form.getCategory());
+            controller.save(form.getTransaction());
             atualizarTabela();
+            if (dashboard != null) {
+                dashboard.atualizarDashboard();
+            }
             JOptionPane.showMessageDialog(
-                this, 
-                "Categoria criada com sucesso!", 
-                "✓ Sucesso", 
+                this,
+                "Transação criada com sucesso!",
+                "✓ Sucesso",
                 JOptionPane.INFORMATION_MESSAGE
             );
         }
@@ -350,7 +371,7 @@ public class PanelCategorias extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableCategories;
+    private javax.swing.JTable jTableTransactions;
     private javax.swing.JTextField jTextFieldID;
     // End of variables declaration//GEN-END:variables
 }
