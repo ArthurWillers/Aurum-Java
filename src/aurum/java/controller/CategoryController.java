@@ -83,7 +83,7 @@ public class CategoryController {
             stmt.setInt(1, id);
             int rowsAffected = stmt.executeUpdate();
 
-            return rowsAffected > 0; // Retorna true se pelo menos uma linha foi afetada
+            return rowsAffected > 0;
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(

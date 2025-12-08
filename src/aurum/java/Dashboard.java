@@ -23,8 +23,6 @@ import javax.swing.SpinnerNumberModel;
  */
 public class Dashboard extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
-
     private YearMonth mesSelecionado;
     private PanelTransactions transactionsPanel;
 
@@ -33,10 +31,8 @@ public class Dashboard extends javax.swing.JFrame {
      */
     public Dashboard() {
         initComponents();
-        // Define o mês atual como padrão ao iniciar
         this.mesSelecionado = YearMonth.now();
 
-        // Adiciona a ABA de Categorias
         PanelCategorias categoriasPanel = new PanelCategorias();
         jTabbedPane.addTab("Gerenciar Categorias", categoriasPanel);
         
@@ -46,11 +42,8 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     public void atualizarDashboard() {
-        // Atualiza o JLabel com o mês selecionado
         Locale localeBrasil = new Locale("pt", "BR");
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("MMMM 'de' yyyy", localeBrasil);
-
-        // Formata o texto e deixa a primeira letra maiúscula
         String mesFormatado = mesSelecionado.format(formatador);
         mesFormatado = mesFormatado.substring(0, 1).toUpperCase() + mesFormatado.substring(1);
 
@@ -313,20 +306,18 @@ public class Dashboard extends javax.swing.JFrame {
                 mesSelecionado.getYear(), 1900, 2500, 1
         ));
 
-        // Monta o painel que ficará dentro do diálogo
         JPanel painelSelecao = new JPanel();
         painelSelecao.add(new JLabel("Mês:"));
         painelSelecao.add(spinnerMes);
         painelSelecao.add(new JLabel("Ano:"));
         painelSelecao.add(spinnerAno);
 
-        // Exibe o JOptionPane
         int resultado = JOptionPane.showConfirmDialog(
-                this, // Janela pai (o próprio Dashboard)
-                painelSelecao, // Componente customizado
-                "Selecione o Mês e Ano", // Título da janela
-                JOptionPane.OK_CANCEL_OPTION, // Botões OK e Cancelar
-                JOptionPane.PLAIN_MESSAGE // Ícone
+                this,
+                painelSelecao,
+                "Selecione o Mês e Ano",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE 
         );
 
         if (resultado == JOptionPane.OK_OPTION) {
